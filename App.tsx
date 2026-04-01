@@ -2,25 +2,39 @@ import React from "react"
 import {
     View,
     Text,
-    Button
+    Button,
+    StyleSheet,
 } from "react-native"
 
-function App(){
-    return(
-            <View>
-            <Text>hellow world</Text>
-            <Text>hellow world</Text>
-            <Text>hellow world</Text>
-            <Text>hellow world</Text>
-            <Button 
-                    title="Press Me" 
-                    onPress={() => console.log('Button 1 pressed')} 
-                />
-            </View>
 
-           
+
+function App() {
+    return (
+        <View style={styles.container}>
+            <Text style={styles.title}>My first app</Text>
+            <Text style ={styles.paragraph}>my name : shivamsingh</Text>
+            <Text>building a saas app</Text>
             
-    )
+            <Button 
+                title="Press Me" 
+                onPress={() => alert('hi there')}
+            />
+        </View>
+    );
 }
-
-export default App 
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center"
+    },
+    title: {
+        fontSize: 30,
+        fontWeight: "bold"
+    },
+    paragraph:{
+        fontSize:20,
+        margin: 10 
+    }
+});
+export default App
