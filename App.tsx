@@ -10,6 +10,7 @@ import {
 
 function App() {
     return (
+        
         <View style={styles.container}>
             <Text style={styles.title}>My first app</Text>
             <Text style ={styles.paragraph}>my name : shivamsingh</Text>
@@ -17,7 +18,7 @@ function App() {
             
             <Button 
                 title="Press Me" 
-                onPress={() => alert('hi there')}
+                onPress={() => ('hi there')}
             />
         </View>
     );
@@ -26,7 +27,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "space-around"
     },
     title: {
         fontSize: 30,
