@@ -1,0 +1,87 @@
+import { useState } from 'react'; // React se useState hook mangwaya data store karne ke liye
+import { View, Text, StyleSheet, Button, TextInput, Alert } from 'react-native'; // UI elements ko import kiya
+
+// Interface banaya taaki TypeScript ko pata chale user object kaisa dikhega
+interface users {
+  name: string; // name hamesha string hoga
+  age: string;  // age bhi string format mein rahegi
+}
+
+const multipleUserList = () => {
+  const [name, setName] = useState('');  // Name input ki state, shuru mein khali hai
+  const [age, setAge] = useState('');    // Age input ki state, shuru mein khali hai
+  const [users, setUsers] = useState<users[]>([]); // Users ki list store karne ke liye empty array
+
+  return (
+    <View> 
+      <Text>Adding new list to array</Text> {/* Screen par text dikhane ke liye */}
+      
+      <TextInput
+        placeholder='type your name' // Box ke andar kya likhna hai uska hint
+        value={name}                 // Box mein wahi dikhega jo 'name' variable mein hai
+        onChangeText={setName}       // Jab bhi type karoge, 'name' update ho jayega
+      /> 
+
+      <TextInput /> {/* Khali line space ke liye (extra hai) */}
+      
+      <TextInput
+        placeholder='type your age'  // Age dalne ke liye hint
+        value={age}                  // Box mein wahi dikhega jo 'age' variable mein hai
+        onChangeText={setAge}        // Type karne par 'age' state update hogi
+      />
+
+      <TextInput /> {/* Khali line space ke liye */}
+
+      <View>
+        <Button
+          title='add new list'       // Button pe likha hua text
+          onPress={() => {           // Button dabane par kya hoga
+            const newUser = {        // Naya user object banaya
+              name: name,            // Current name liya
+              age: age,              // Current age li
+            }
+            setUsers([...users, newUser]); // Purane users + naya user array mein add kiya
+            setName('');             // Add karne ke baad name box khali kar diya
+            setAge('');              // Add karne ke baad age box khali kar diya
+          }} 
+        />
+
+        {/* Users array par loop chalaya taaki sabko screen par dikha sakein */}
+        {users.map(({ name, age }, index) => (
+          <View key={index}>         {/* Har item ki apni unique pehchan (index) */}
+            <Text>Name: {name}</Text> {/* Screen par user ka naam dikhaya */}
+            <Text>Age: {age}</Text>   {/* Screen par user ki age dikhayi */}
+            <Button
+              title='delete list'    // Delete wala button
+              onPress={() => {       // Delete dabane par Alert box khulega
+                Alert.alert(
+                  'Delete User',     // Alert ka title
+                  `Are you sure you want to delete ${name}?`, // Confirm karne ke liye message
+                  [
+                    { text: 'Cancel', style: 'cancel' }, // Cancel button se kuch nahi hoga
+                    { 
+                      text: 'OK', 
+                      onPress: () => { // OK dabane par...
+                        const updatedUsers = users.filter((_, i) => i !== index); // Is index ko chhod kar baaki sab rakho
+                        setUsers(updatedUsers); // Nayi list update kardo (user delete ho gaya)
+                      } 
+                    },
+                  ],
+                );
+              }} 
+            />
+          </View>
+        ))} 
+      </View>
+    </View>
+  );
+};
+
+// Styling ke liye (abhi khali hai)
+const styles = StyleSheet.create({
+  container: {
+  }
+});
+
+// Is component ko export kiya taaki dusri files mein use ho sake
+export default multipleUserList;
